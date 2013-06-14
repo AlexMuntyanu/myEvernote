@@ -4,9 +4,10 @@ import java.sql.Date;
 
 /**
  */
-@Entity
-public class Note {
+//@Entity
+public class NoteImpl {
     private int id;
+    private String noteName;
     private String text;
     private Date dateOfCreation;
     private Date dateOfModification;
@@ -27,6 +28,10 @@ public class Note {
         return dateOfModification;
     }
 
+    public String getNoteName() {
+        return noteName;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -41,5 +46,9 @@ public class Note {
 
     public void setDateOfModification(Date dateOfModification) {
         this.dateOfModification = dateOfModification;
+    }
+
+    public void setNoteName(String noteName) {
+        this.noteName = noteName;
     }
 }

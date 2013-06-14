@@ -1,10 +1,16 @@
+package com.notes.entities;
+
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.h2.tools.Server;
 
 public class Test {
-    public static void main(String[] a)
-            throws Exception {
+
+    private List<NoteImpl> listOfNotes = new ArrayList<NoteImpl>();
+
+    public List<NoteImpl> getNoteList() throws Exception {
         Class.forName("org.h2.Driver");
         Connection connection = DriverManager.
                 getConnection("jdbc:h2:~/test", "sa", "");
@@ -33,14 +39,22 @@ public class Test {
         }
 
         PreparedStatement ps = connection.prepareStatement("select * from NOTES");
-        ResultSet resultSet = ps.executeQuery();
-        while (resultSet.next()) {
-            StringBuilder sb = new StringBuilder(resultSet.getString("NOTE_NAME"));
-            sb.append(resultSet.getString("TEXT"))
-                    .append(resultSet.getDate("CREATED"))
-                    .append(resultSet.getDate("UPDATED"));
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            NoteImpl note = new NoteImpl();
+            note.setId(rs.getInt("ID"));
+            note.setNoteName(rs.getString("NOTE_NAME"));
+            note.setText(rs.getString("TEXT"));
+            listOfNotes.add(note);
+
+            StringBuilder sb = new StringBuilder(rs.getString("NOTE_NAME"));
+            sb.append(rs.getString("TEXT"))
+                    .append(rs.getDate("CREATED"))
+                    .append(rs.getDate("UPDATED"));
             System.out.println(sb);
+
         }
         connection.close();
+        return listOfNotes;
     }
 }

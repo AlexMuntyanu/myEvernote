@@ -4,7 +4,7 @@ import java.sql.Date;
 
 /**
  */
-@Entity
+//@Entity
 public class Note {
     private int pid;
     private String text;
